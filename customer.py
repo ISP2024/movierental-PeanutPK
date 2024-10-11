@@ -43,7 +43,7 @@ class Customer:
 
         for rental in self.rentals:
             # compute rental change
-            amount = self.get_price(rental)
+            amount = rental.get_price()
             # compute the frequent renter points based on movie price code
             if rental.get_movie().get_price_code() == Movie.NEW_RELEASE:
                 # New release earns 1 point per day rented
