@@ -31,6 +31,19 @@ class CustomerTest(unittest.TestCase):
         # new movie 15.0 + children 3.0 + old charges
         self.assertEqual(self.c.get_billing(), 36.0)
 
+    def test_frequent_rental(self):
+        """test for computing frequency of rental"""
+        self.c.add_rental(Rental(self.new_movie, 5))
+        self.c.add_rental(Rental(self.childrens_movie, 4))
+        self.c.add_rental(Rental(self.new_movie, 5))
+        # 2 new movies rented for 5 days and one of the other categories
+        self.assertEqual(self.c.get_rentals(), 11)
+
+        self.c.add_rental(Rental(self.regular_movie, 5))
+        self.c.add_rental(Rental(self.new_movie, 5))
+        # 1 new movie and 1 regular movie
+        self.assertEqual(self.c.get_rentals(), 17)
+
     def test_statement(self):
         stmt = self.c.statement()
         # get total charges from statement using a regex
