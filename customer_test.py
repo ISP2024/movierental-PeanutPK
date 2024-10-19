@@ -17,24 +17,24 @@ class CustomerTest(unittest.TestCase):
         self.c = Customer("Movie Mogul")
         self.new_movie = Movie("Mulan", Movie.NEW_RELEASE)
         self.regular_movie = Movie("CitizenFour", Movie.REGULAR)
-        self.childrens_movie = Movie("Frozen", Movie.CHILDRENS)
+        self.children_movie = Movie("Frozen", Movie.CHILDREN)
 
     def test_billing(self):
         """test for computing total charges"""
         self.c.add_rental(Rental(self.new_movie, 5))
-        self.c.add_rental(Rental(self.childrens_movie, 4))
+        self.c.add_rental(Rental(self.children_movie, 4))
         # new movie 15.0 + children 3.0
         self.assertEqual(self.c.get_billing(), 18.0)
 
         self.c.add_rental(Rental(self.new_movie, 5))
-        self.c.add_rental(Rental(self.childrens_movie, 4))
+        self.c.add_rental(Rental(self.children_movie, 4))
         # new movie 15.0 + children 3.0 + old charges
         self.assertEqual(self.c.get_billing(), 36.0)
 
     def test_frequent_rental(self):
         """test for computing frequency of rental"""
         self.c.add_rental(Rental(self.new_movie, 5))
-        self.c.add_rental(Rental(self.childrens_movie, 4))
+        self.c.add_rental(Rental(self.children_movie, 4))
         self.c.add_rental(Rental(self.new_movie, 5))
         # 2 new movies rented for 5 days and one of the other categories
         self.assertEqual(self.c.get_rentals(), 11)

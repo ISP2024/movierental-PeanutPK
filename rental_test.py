@@ -9,7 +9,7 @@ class RentalTest(unittest.TestCase):
     def setUp(self):
         self.new_movie = Movie("Dune: Part Two", Movie.NEW_RELEASE)
         self.regular_movie = Movie("Air", Movie.REGULAR)
-        self.childrens_movie = Movie("Frozen", Movie.CHILDRENS)
+        self.children_movie = Movie("Frozen", Movie.CHILDREN)
 
     def test_movie_attributes(self):
         """trivial test to catch refactoring errors or change in API of
@@ -31,16 +31,16 @@ class RentalTest(unittest.TestCase):
         rental = Rental(self.regular_movie, 5)
         self.assertEqual(rental.get_price(), 6.5)
         # Children movies
-        rental = Rental(self.childrens_movie, 1)
+        rental = Rental(self.children_movie, 1)
         self.assertEqual(rental.get_price(), 1.5)
-        rental = Rental(self.childrens_movie, 5)
+        rental = Rental(self.children_movie, 5)
         self.assertEqual(rental.get_price(), 4.5)
 
     def test_rental_points(self):
         """test rental points for each movie type"""
         rental = Rental(self.regular_movie, 1)
         self.assertEqual(rental.get_rental_points(), 1)
-        rental = Rental(self.childrens_movie, 3)
+        rental = Rental(self.children_movie, 3)
         self.assertEqual(rental.get_rental_points(), 1)
         rental = Rental(self.new_movie, 5)
         self.assertEqual(rental.get_rental_points(), 5)
