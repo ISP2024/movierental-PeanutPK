@@ -1,3 +1,6 @@
+import logging
+
+
 class Rental:
     """
     A rental of a movie by customer.
@@ -18,11 +21,23 @@ class Rental:
 
     def get_price(self):
         """Return a calculated price for a rental."""
-        return self.movie.get_price(self.days_rented)
+        amount = 0
+        try:
+            amount = self.movie.get_price_code().get_price(self.days_rented)
+        except AttributeError:
+            log = logging.getLogger()
+            log.error(f"Movie {self} has unrecognized priceCode "
+                      f"{self.movie.get_price_code()}")
+        return amount
 
     def get_rental_points(self):
         # compute the frequent renter points based on movie price code
-        return self.movie.get_rental_points(self.days_rented)
+        if self.movie.get_price_code() == self.movie.NEW_RELEASE:
+            # New release earns 1 point per day rented
+            return self.days_rented
+        else:
+            # Other rentals get only 1 point
+            return 1
 
     def get_movie(self):
         return self.movie
