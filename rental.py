@@ -20,7 +20,7 @@ class Rental:
         """Return a calculated price for a rental."""
         return self.movie.get_price(self.days_rented)
 
-    def rental_points(self):
+    def get_rental_points(self):
         # compute the frequent renter points based on movie price code
         return self.movie.get_rental_points(self.days_rented)
 

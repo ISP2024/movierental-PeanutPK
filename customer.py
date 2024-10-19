@@ -25,16 +25,11 @@ class Customer:
 
     def get_billing(self):
         """Return the customer's total charge."""
-        total_charge = 0
-        for rental in self.rentals:
-            total_charge += rental.get_price()
-        return total_charge
+        return sum(charges.get_price() for charges in self.rentals)
 
     def get_rentals(self):
-        frequent_renter_points = 0
-        for rental in self.rentals:
-            frequent_renter_points += rental.rental_points()
-        return frequent_renter_points
+        """Return the customer's total rental points.'"""
+        return sum(points.get_rental_points() for points in self.rentals)
 
     def statement(self):
         """Create a statement of rentals for the current period.

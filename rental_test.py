@@ -39,8 +39,8 @@ class RentalTest(unittest.TestCase):
     def test_rental_points(self):
         """test rental points for each movie type"""
         rental = Rental(self.regular_movie, 1)
-        self.assertEqual(rental.rental_points(), 1)
+        self.assertEqual(rental.get_rental_points(), 1)
         rental = Rental(self.childrens_movie, 3)
-        self.assertEqual(rental.rental_points(), 1)
+        self.assertEqual(rental.get_rental_points(), 1)
         rental = Rental(self.new_movie, 5)
-        self.assertEqual(rental.rental_points(), 5)
+        self.assertEqual(rental.get_rental_points(), 5)
