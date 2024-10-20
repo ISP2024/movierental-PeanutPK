@@ -15,32 +15,33 @@ class CustomerTest(unittest.TestCase):
         movies = list of some movies
         """
         self.c = Customer("Movie Mogul")
-        self.new_movie = Movie("Mulan")
-        self.regular_movie = Movie("CitizenFour")
-        self.children_movie = Movie("Frozen")
+        self.new_movie = Movie("New Mulan", 2024, ["Drama", "Fantasy"])
+        self.regular_movie = Movie("CitizenFour", 2014, ["Biography",
+                                                         "Documentary"])
+        self.children_movie = Movie("Frozen", 2013, ["Children", "Comedy"])
 
     def test_billing(self):
         """test for computing total charges"""
-        self.c.add_rental(Rental(self.new_movie, 5, Rental.NEW_RELEASE))
-        self.c.add_rental(Rental(self.children_movie, 4, Rental.CHILDREN))
+        self.c.add_rental(Rental(self.new_movie, 5))
+        self.c.add_rental(Rental(self.children_movie, 4))
         # new movie 15.0 + children 3.0
         self.assertEqual(self.c.get_billing(), 18.0)
 
-        self.c.add_rental(Rental(self.new_movie, 5, Rental.NEW_RELEASE))
-        self.c.add_rental(Rental(self.children_movie, 4, Rental.CHILDREN))
+        self.c.add_rental(Rental(self.new_movie, 5))
+        self.c.add_rental(Rental(self.children_movie, 4))
         # new movie 15.0 + children 3.0 + old charges
         self.assertEqual(self.c.get_billing(), 36.0)
 
     def test_frequent_rental(self):
         """test for computing frequency of rental"""
-        self.c.add_rental(Rental(self.new_movie, 5, Rental.NEW_RELEASE))
-        self.c.add_rental(Rental(self.children_movie, 4, Rental.CHILDREN))
-        self.c.add_rental(Rental(self.new_movie, 5, Rental.NEW_RELEASE))
+        self.c.add_rental(Rental(self.new_movie, 5))
+        self.c.add_rental(Rental(self.children_movie, 4))
+        self.c.add_rental(Rental(self.new_movie, 5))
         # 2 new movies rented for 5 days and one of the other categories
         self.assertEqual(self.c.get_rentals(), 11)
 
-        self.c.add_rental(Rental(self.regular_movie, 5, Rental.REGULAR))
-        self.c.add_rental(Rental(self.new_movie, 5, Rental.NEW_RELEASE))
+        self.c.add_rental(Rental(self.regular_movie, 5 ))
+        self.c.add_rental(Rental(self.new_movie, 5))
         # 1 new movie and 1 regular movie
         self.assertEqual(self.c.get_rentals(), 17)
 
@@ -52,7 +53,7 @@ class CustomerTest(unittest.TestCase):
         self.assertIsNotNone(matches)
         self.assertEqual("0.00", matches[1])
         # add a rental
-        self.c.add_rental(Rental(self.new_movie, 4, Rental.NEW_RELEASE))  # days
+        self.c.add_rental(Rental(self.new_movie, 4))  # days
         stmt = self.c.statement()
         matches = re.match(pattern, stmt.replace('\n', ''), flags=re.DOTALL)
         self.assertIsNotNone(matches)
