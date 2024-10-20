@@ -1,4 +1,6 @@
 import logging
+from datetime import datetime
+
 from pricing import RegularPrice, NewRelease, ChildrensPrice
 
 
@@ -17,13 +19,24 @@ class Rental:
     NEW_RELEASE = NewRelease()
     CHILDREN = ChildrensPrice()
 
-    def __init__(self, movie, days_rented, price_code):
+    def __init__(self, movie, days_rented):
         """Initialize a new movie rental object for
            a movie with known rental period (daysRented).
         """
         self.movie = movie
         self.days_rented = days_rented
-        self.price_code = price_code
+        self.price_code = self.price_code_for_movie()
+
+    def price_code_for_movie(self):
+        """
+        Return the price code for a movie rental.
+        """
+        if self.movie.year == datetime.now().year:
+            return Rental.NEW_RELEASE
+        elif "Children" in self.movie.genre:
+            return Rental.CHILDREN
+        else:
+            return Rental.REGULAR
 
     def get_price(self):
         """Return a calculated price for a rental."""
