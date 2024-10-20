@@ -1,4 +1,6 @@
 import unittest
+from datetime import datetime
+
 from rental import Rental
 from movie import Movie, MovieCatalog
 
@@ -7,7 +9,7 @@ class RentalTest(unittest.TestCase):
 
     def setUp(self):
         catalog = MovieCatalog()
-        self.new_movie = catalog.get_movie("Dune: Part Two")
+        self.new_movie = Movie("Dune: Part Two", datetime.now().year, ["Action"])
         self.regular_movie = Movie("Air", 2023, ["Drama", "Sport"])
         self.children_movie = Movie("Frozen", 2013, ["Children", "Comedy"])
 
@@ -46,8 +48,8 @@ class RentalTest(unittest.TestCase):
         rental = Rental(self.new_movie, 5)
         self.assertEqual(rental.get_rental_points(), 5)
 
-    def test_catalog(self):
-        """Test for MovieCatalog class"""
+    def test_catalog_attributes(self):
+        """test for MovieCatalog class"""
         # SingleTon test
         catalog = MovieCatalog()
         catalog2 = MovieCatalog()
@@ -58,3 +60,12 @@ class RentalTest(unittest.TestCase):
         self.assertEqual(cinderella, catalog.get_movie("Cinderella"))
         self.assertEqual(cinderella.year, 1950)
         self.assertIn("Animation", cinderella.genre)
+
+    def test_rental_price_code(self):
+        """test for price code"""
+        self.assertEqual(Rental(self.new_movie, 1).price_code,
+                         Rental.NEW_RELEASE)
+        self.assertEqual(Rental(self.regular_movie, 1).price_code,
+                         Rental.REGULAR)
+        self.assertEqual(Rental(self.children_movie, 1).price_code,
+                         Rental.CHILDREN)
