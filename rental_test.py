@@ -45,3 +45,16 @@ class RentalTest(unittest.TestCase):
         self.assertEqual(rental.get_rental_points(), 1)
         rental = Rental(self.new_movie, 5)
         self.assertEqual(rental.get_rental_points(), 5)
+
+    def test_catalog(self):
+        """Test for MovieCatalog class"""
+        # SingleTon test
+        catalog = MovieCatalog()
+        catalog2 = MovieCatalog()
+        self.assertEqual(catalog2, catalog)
+
+        # load data test
+        cinderella = catalog.get_movie("Cinderella")
+        self.assertEqual(cinderella, catalog.get_movie("Cinderella"))
+        self.assertEqual(cinderella.year, 1950)
+        self.assertIn("Animation", cinderella.genre)
