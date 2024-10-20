@@ -23,12 +23,23 @@ in the assignment description.
 
 2.1 what refactoring signs (code smells) suggest this refactoring?
 
-<span style='color: #A8E6CF'>Ans.</span> Inappropriate Intimacy.
+- <span style='color: #A8E6CF'>Ans.</span> Inappropriate Intimacy.
 
 2.2 what design principle suggests this refactoring? Why?
 
-<span style='color: #A8E6CF'>Ans.</span> Single Responsibility Principle (SRP),
+- <span style='color: #A8E6CF'>Ans.</span> Single Responsibility Principle (SRP),
 because SRP wants a class to only take a responsible for itself only. Having
 a `price_code` attribute which only used by Rental class means that Movie class
 handles both information about price_code for itself and for Rental class
 method which violates SRP.
+
+5.2 Document the reason(s) for your choice
+
+- <span style='color: #A8E6CF'>Ans.</span>
+  1. Simplicity:
+  It is better to let Rental class defines price code itself
+  than using the Movie class method and act as the middle man.
+
+  2. High Cohesion:
+  Rental class uses price code the most, so it is better to add get price code
+  to the Rental class.
